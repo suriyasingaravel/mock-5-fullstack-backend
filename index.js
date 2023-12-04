@@ -1,17 +1,20 @@
 
 const express = require('express');
 require('dotenv').config()
-const {connection} = require("./db")
+const {connection} = require("./db");
+const {contactRouter} = require("./Routes/contact.routes")
 
 const app = express();
 
 app.use(express.json());
 
+app.use("/contacts", contactRouter);
+
 app.get("/",(req,res)=>{
     res.send("Hello World")
 })
 
-app.listen(8080,async()=>{
+app.listen(process.env.port,async()=>{
     try {
         await connection;
         console.log(`server connected to Database successfully`);
